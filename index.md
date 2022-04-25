@@ -4,14 +4,14 @@ layout: homepage
 keywords:
 
 # Hero section
-title: "Cloud-Native Workshop: Containerize and deploy an app to Azure Kubernetes Service (AKS)"
+title: "Cloud-Native Workshop with GitHub"
 description: by BoxBoat
 buttons:
     - content: Slides
-      url: '/slides/boxboat-workshop-slides.pdf'
+      url: '/slides/placeholder.pdf'
       external_url: false
     - content: GitHub
-      url: 'https://github.com/boxboat/aks-wkshp-1'
+      url: 'https://github.com/boxboat/github-cloud-native-workshop'
       external_url: true
 
 # Author box
@@ -19,7 +19,7 @@ author:
     title: About Authors
     title_url: '#'
     external_url: true
-    description: Faheem and Facundo are both solutions architects at BoxBoat specializing in Kubernetes on Azure.
+    description: Facundo, Marc, Daniel, and Derek are BoxBoaters with experience in all major clouds and modern CI/CD systems.
 
 # Grid navigation
 grid_navigation:
@@ -27,12 +27,12 @@ grid_navigation:
       excerpt: "Let's get you set-up"
       cta: Read More
       url: '/lab-prerequisites'
-    - title: 1. Lab - Intro to Docker
-      excerpt: "Let's get started with Docker!"
+    - title: 1. Lab - Intro to Codespaces
+      excerpt: "Let's play with Codespaces!"
       cta: Read More
       url: '/lab-docker'
-    - title: 2. Lab - Intro to Kubernetes
-      excerpt: "Let's get started with Kubernetes!"
+    - title: 2. Lab - Intro to CI/CD with GitHub
+      excerpt: "Let's deploy with GitHub actions!"
       cta: Read More
       url: '/lab-kubernetes'
 ---
