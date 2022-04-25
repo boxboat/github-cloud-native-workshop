@@ -1,10 +1,10 @@
 # Theme settings
 doks:
-    baseurl: /aks-wkshp-1
+    baseurl: /github-cloud-native-workshop
     color_theme: blue # Available themes: blue (default), green, purple, red and yellow
     header:
         logo:
-            text: BoxBoat Cloud-Native Workshop
+            text: BoxBoat Cloud-Native Workshop with GitHub
             image: false
         nav:
             - item_name: Resources
