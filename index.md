@@ -23,16 +23,16 @@ author:
 
 # Grid navigation
 grid_navigation:
-    - title: 0. Pre-Requisites
+    - title: Pre-Requisites
       excerpt: "Let's get you set-up"
       cta: Read More
       url: '/lab-prerequisites'
-    - title: 1. Lab - Intro to Codespaces
-      excerpt: "Let's play with Codespaces!"
+    - title: DevOps for dotnet
+      excerpt: "GitHub Codespaces, GitHub Actions, Containers!"
       cta: Read More
       url: '/lab-docker'
-    - title: 2. Lab - Intro to CI/CD with GitHub
-      excerpt: "Let's deploy with GitHub actions!"
+    - title: DevOps for Java 
+      excerpt: "(Coming Soon)"
       cta: Read More
       url: '/lab-kubernetes'
 ---
