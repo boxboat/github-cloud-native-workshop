@@ -5,8 +5,8 @@ keywords:
 comments: false
 
 # Hero section
-title: Lab - Get things setup
-description: New to Azure? Don't worry
+title: Lab - Codespaces requirements
+description: Organizational setup that's needed for the Codespaces workshop
 
 # Micro navigation
 micro_nav: true
@@ -14,13 +14,15 @@ micro_nav: true
 # Page navigation
 page_nav:
     next: 
-        content: Lab - Docker
-        url: '/lab-docker'
+        content: Lab - Codespaces
+        url: '/lab-codespaces'
 ---
 
 ## Pre-Requisites
-- Azure CLI
-- An Azure Subscription with **Contributor** rights
-- `kubectl`
-- [Docker Desktop](https://www.docker.com/products/docker-desktop)
+- Modern Web Browser
+- Azure Subscription with a Service Principle with Owner permissions
+- Organization w/Codespaces enabled
+  - Azure Subscription SP details as Org Secrets
+  - Organization .github repo with starter workflows
+  - Ability to consume starter workflows from preferred type of repo (public/private)
 
