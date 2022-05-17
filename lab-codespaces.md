@@ -208,7 +208,7 @@ git push origin dev
 
  **Step 3: Trigger the whole Action**
 
-Our Action only builds the dotnet app Artifact on the `dev` branch. To build the container, we must create a PR into `main`. Create a PR from `dev` into `main`, noticethe checks and complete the PR. Our Action now runs again, this time creating an image which is stored in our repo as a Package. 
+Our Action only builds the dotnet app Artifact on the `dev` branch. To build the container, we must create a PR into `main`. Create a PR from `dev` into `main`, notice the checks and complete the PR. Our Action now runs again, this time creating an image which is stored in our repo as a package. 
 
 On the "Code" tab of the repo, you'll see our package. Click on it, and take note and copy the url to the image from the top section on this page. It starts with `ghcr.io/`
 
