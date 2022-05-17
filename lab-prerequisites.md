@@ -20,7 +20,7 @@ page_nav:
 
 ## Pre-Requisites
 - Modern Web Browser
-- Azure Subscription with a Service Principle with Owner permissions
+- Azure Subscription with a Service Principal with Owner permissions
 - Organization w/Codespaces enabled
   - Azure Subscription SP details as Org Secrets
   - Organization .github repo with starter workflows
