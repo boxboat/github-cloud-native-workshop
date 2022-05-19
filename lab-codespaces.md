@@ -5,7 +5,7 @@ keywords:
 comments: false
 
 # Hero section
-title: Lab - GitHub Codespaces
+title: Lab - DevOps for dotnet
 description: Let's use Codespaces to make a containerized .NET app, then deploy it.
 
 # Author box
