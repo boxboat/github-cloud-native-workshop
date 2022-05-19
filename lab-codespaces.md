@@ -6,7 +6,7 @@ comments: false
 
 # Hero section
 title: Lab - DevOps for dotnet
-description: Let's use Codespaces to make a containerized .NET app, then deploy it.
+description: Let's use Codespaces to make a containerized .NET app, then deploy it to Azure Container App.
 
 # Author box
 author:
