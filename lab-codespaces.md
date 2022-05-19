@@ -212,7 +212,7 @@ Our Action only builds the dotnet app Artifact on the `dev` branch. To build the
 
 On the "Code" tab of the repo, you'll see our package. Click on it, and take note and copy the url to the image from the top section on this page. It starts with `ghcr.io/`
 
-## Using GitHub Actions to Deploy Containers to Azure
+## Using GitHub Actions to Deploy Containers to Azure Container Apps
 
  **Step 1: Create an Action**
 
@@ -315,7 +315,7 @@ git commit -am "deploying container app"
 git push origin dev
 ```
 
-Now our Action will deploy our image to an Azure Container App instance. Follow along and then:
+Now our Action will deploy our image to an Azure Container Apps. Follow along and then:
 
 ```shell
 az login
