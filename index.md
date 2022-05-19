@@ -30,9 +30,5 @@ grid_navigation:
     - title: DevOps for dotnet
       excerpt: "GitHub Codespaces, GitHub Actions, Containers!"
       cta: Read More
-      url: '/lab-docker'
-    - title: DevOps for Java 
-      excerpt: "(Coming Soon)"
-      cta: Read More
-      url: '/lab-kubernetes'
+      url: '/lab-codespaces'
 ---
