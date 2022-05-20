@@ -62,7 +62,7 @@ info: Microsoft.Hosting.Lifetime[0]
 
 **Step 2: Access our app**
 
-Our app is now running, and it's available to us because Codespaces automatically forwards the ports from the `dotnet run` command. We want to travel to the first URL dotnet spits out, slightly modified. Visit `https://localhost:7258/swagger` in your web browser. The port will be random, so make sure you copy what you have in your terminal output. 
+Our app is now running, and it's available to us because Codespaces automatically forwards the ports from the `dotnet run` command. A popup should appear, and we can click on 'Open in Browser' to get to our app. If you don't see a popup, you can visit `https://localhost:7258` in your web browser. 
 
 You are now at the Swagger API documentation. Expand some endpoints and try them out. 
 
@@ -171,7 +171,7 @@ Now that we've built a containerized application in Codespaces, how do we get it
 
 In GitHub, click the Actions tab of your repo. We're going to use a Starter Workflow. This will allow us to very quickly, very easily, get a working Action into our repo. Under "By <YOUR_ORGANIZATION>", chose `.NET Core Container Workflow`
 
-Edit lines 34 and 45 like so:
+Edit lines `34` and `45` like so:
 
 ```diff
 --        name: <APP NAME HERE>
@@ -233,11 +233,25 @@ That's it! Someone else has already done the hard work for you, this'll just wor
 
 The Terraform code that will deploy our infrastructure and app consists of two files. `main.tf` contains the terraform configuration bits. We don't need to worry about that here. `container_app.tf` deploys a resource group, then a Log Analytics workspace, a Container App Environment and a Container App for us.
 
-In Codespaces, let's edit terraform/container_app.tf and change lies 6, 11, 37, 53 and 54 like so:
+In Codespaces, let's edit two more files. The first is responsible for storing our _state_ so that terraform can always be aware of any changes made. Edit `terraform/backend.tf` and give the __key__ a unique name by using your username. For example, my username is 'dkoch'. __Note, if your username has any special characters like "-" or "_", omit those.__ We only want alphanumeric characters here:
+
+```diff
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "codespaces-demo-resources"
+    storage_account_name = "codespacesstate"
+    container_name       = "codespacesstate"
+--    key                  = "<USERNAME>.state"
+++    key                  = "dkoch.state"
+  }
+}
+```
+
+ Then, edit `terraform/container_app.tf` and change lies `6`, `11`, `37`, `53` and `54` like so:
 
 ```diff
 resource "azurerm_resource_group" "rg" {
---  name = ""
+--  name = "<USERNAME>resources"
 ++  name = "dkochresources"
   location = local.location
 }
@@ -245,7 +259,7 @@ resource "azurerm_resource_group" "rg" {
 
 ```diff
 resource "azurerm_log_analytics_workspace" "laws" {
---  name                = ""
+--  name                = "<USERNAME>law"
 ++  name                = "dkochlaw"
   location            = local.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -256,17 +270,17 @@ resource "azurerm_log_analytics_workspace" "laws" {
 
 ```diff
 resource "azapi_resource" "container_app_environment" {
---  name = ""
-++  name = "Workshop"  
+--  name = "<USERNAME>environment"
+++  name = "dkochenvironment"  
   location = local.location
   parent_id = azurerm_resource_group.rg.id
 ```
 
-__Make sure your image value (line 53) is all lowercase__
+__Make sure your image value (line 53) is all lowercase__. Reminder that this value is what we copied earlier from GitHub, on the page we get when we click on our package.
 
 ```diff
 resource "azapi_resource" "container_app" {
---  name = "" 
+--  name = "<USERNAME>app" 
 ++  name = "dkochapp"   
   location = local.location
   parent_id = azurerm_resource_group.rg.id
@@ -283,9 +297,9 @@ resource "azapi_resource" "container_app" {
       template = {
         containers = [
           {
---            image = ""
+--            image = "ghcr.io/<ORG>/<REPO>:<TAG>"
 ++            image = "ghcr.io/boxboat-codespaces/dkoch-workshop:20220515.3"
---            name = ""
+--            name = "<USERNAME>container"
 ++            name = "dkochcontainer"
           }
 ```
