@@ -23,6 +23,7 @@ page_nav:
 - Azure Subscription with a Service Principal with Owner permissions
 - Organization w/Codespaces enabled
   - Azure Subscription SP details as Org Secrets
+  - Storage Account in the sub for state management
   - Organization .github repo with starter workflows
   - Ability to consume starter workflows from preferred type of repo (public/private)
 
