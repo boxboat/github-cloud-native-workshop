@@ -28,7 +28,7 @@ grid_navigation:
       cta: Read More
       url: '/lab-prerequisites'
     - title: DevOps for dotnet
-      excerpt: "GitHub Codespaces, GitHub Actions, Containers!"
+      excerpt: "GitHub Codespaces, GitHub Actions, and Azure Container Apps!"
       cta: Read More
       url: '/lab-codespaces'
 ---
