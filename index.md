@@ -24,7 +24,7 @@ author:
 # Grid navigation
 grid_navigation:
     - title: Pre-Requisites
-      excerpt: "Let's get you set-up"
+      excerpt: "Before the workshop"
       cta: Read More
       url: '/lab-prerequisites'
     - title: DevOps for dotnet
