@@ -23,9 +23,6 @@ page_nav:
     prev:
         content: Home
         url: '/'
-    next:
-        content: Lab - Codespaces
-        url: '/lab-codespaces'
 ---
 
 ## Fork the workshop repo, launch Codespaces
