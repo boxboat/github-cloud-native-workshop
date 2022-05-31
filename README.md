@@ -4,6 +4,7 @@ Repository with labs that attendes can follow at their own pace.
 
 ## Running Locally
 
+### Bash
 ``` shell
 docker run --rm \
   --volume="$PWD:/srv/jekyll" \
@@ -14,6 +15,7 @@ docker run --rm \
 
 ## Updating Gems
 
+### Bash
 ``` shell
 export JEKYLL_VERSION=3.8
 docker run --rm \
