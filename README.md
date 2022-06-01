@@ -1,6 +1,7 @@
 # BoxBoat's Cloud Native Workshop
 
-A series of labs that people can try to do things with Azure using Codespaces.
+A static website that hosts a series of labs that people can try to do things with Azure using Codespaces.
+The Codespaces repositories are elsewhere and they are different from lab to lab.
 
 ## Running Locally
 
