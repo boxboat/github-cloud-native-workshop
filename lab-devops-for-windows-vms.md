@@ -27,15 +27,19 @@ page_nav:
 
 ## Fork the workshop repo, launch Codespaces
 
-Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
+Link 👉🏽 [Workshop repo](https://github.com/boxboat/iac-azure-workshop)
 
-The destination should be a Codespaces enabled Org. You should prepend the repo name with your username, so if your username is fgauna, your repo should be `fgauna-codespaces-workshop`.
+The destination should be a Codespaces enabled Org. You should prepend the repo name with your username, so if your username is fgauna, your repo should be `fgauna-iac-azure-workshop`.
 
-Now that you have a repo to work from, let's launch Codespaces. Click the green "Code" button, "Create codespaces on main". You can now choose to open that in the browser, or in your Visual Studio Code desktop app. 
+Now that you have a repo to work from, let's launch Codespaces. Click the green **"Code"** button, **"Create codespaces on main"**. You can now choose to open that in the browser, or in your Visual Studio Code desktop app. 
+
+![](/doks-theme/assets/images/codespaces-terraform-ansible-create.png)
+
+It can take a while, maybe 5 minutes. 😅
 
 ## More prep work, sorry!
 
-Open a Terminal from the GitHub Codespace. It should be under "Terminal" -> "New Terminal". Use Bash, it should be the default.
+Open a Terminal from the GitHub Codespace. It should be under **"Terminal"** then **"New Terminal"**. Use Bash, it should be the default.
 
 ![](/doks-theme/assets/images/codespaces-terraform-ansible.png)
 
@@ -63,12 +67,13 @@ Now, from Visual Studio Code, open the `backend.tf` file.
 Set `storage_account_name` to the name of the storage account you created above.
 
 ``` yaml
+# terraform/backend.tf
 storage_account_name = "stwkshp[your-name]"
 ```
 
-Now you are ready to plan and apply!
+Now, you are ready to use some Terraform!
 
-## Creating the virtual machine
+## Creating the virtual machine with Terraform
 
 Before you run the Terraform configuration, you'll need to pick a password for your virtual machine.
 
@@ -88,23 +93,31 @@ Next, we do the Terraform "plan". A "plan" shows you what Terraform will do.
 ``` bash
 terraform plan
 ```
+The output would look something like this.
 
-Will give you an output like this.
+![](/doks-theme/assets/images/codespaces-terraform-plan.png)
 
-
+If everything looks good, then you can "apply." An "apply" is a way for you to tell Terraform to proceed with the "plan" and create/modify/delete the resources. The `-auto-approve` flag means that you give consent to Terraform to proceed without asking you again.
 
 ``` bash
 terraform apply -auto-approve
 ```
 
 You will see the Public IP for your virtual machine as an output. 
+If you don't see the Public IP in your terminal, then you can run:
+
+``` bash
+terraform output public_ip
+```
+
 Don't worry, there's an Network Security Group (NSG) rule that only allows traffic from your public IP address.
 
-## Configuring the virtual machine
+## Configuring the virtual machine with Ansible
 
-Configure your `inventory` file to use the Public IP from your virtual machine. 
+Configure your `inventory` file to use the Public IP from your virtual machine 👆🏽. 
 
 ``` ini
+# ansible/inventory.yaml
 [domain_controllers]
 vm-workshop ansible_host=<your ip goes here>
 ```
@@ -118,3 +131,17 @@ ansible-playbook -i inventory --extra-vars="ansible_user=adminuser" --extra-vars
 ```
 
 ![](/doks-theme/assets/images/codespaces-ansible-play.png)
+
+That's it! 🎉
+
+You created a virtual machine using Terraform, then used Ansible to configure the virtual machine. 
+
+## Clean Up 🧹
+
+Now to deprovision everything, just use Terraform.
+
+``` bash
+cd ..
+cd terraform
+terraform destroy
+```
