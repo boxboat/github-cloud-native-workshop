@@ -1,6 +1,6 @@
 # BoxBoat's Cloud Native Workshop
 
-Repository with labs that attendes can follow at their own pace.
+A series of labs that people can try to do things with Azure using Codespaces.
 
 ## Running Locally
 
@@ -23,3 +23,10 @@ docker run --rm \
   -it jekyll/jekyll:$JEKYLL_VERSION \
   bundle update
 ```
+
+## Contribution Guidelines
+
+- Submit a PR with your lab, you can use the instructions above for running the static website locally ☝️
+- Ensure that the Codespaces repository that a person will fork is public and it allows forking.
+- To configure Codespaces, you will have to configure Dev Containers to the repository that a person will fork.
+- After you submit your PR, a peer will attempt the instructions.
