@@ -31,4 +31,8 @@ grid_navigation:
       excerpt: "GitHub Codespaces, GitHub Actions, and Azure Container Apps!"
       cta: Read More
       url: '/lab-codespaces'
+    - title: DevOps for Windows VMs
+      excerpt: "GitHub Codespaces, GitHub Actions, Terraform, and Ansible for Windows!"
+      cta: Read More
+      url: '/lab-devops-for-windows-vms'
 ---
