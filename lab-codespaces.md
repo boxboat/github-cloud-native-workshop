@@ -28,9 +28,11 @@ page_nav:
         url: '/lab-codespaces'
 ---
 
-## Fork the workshop repo, launch Codespaces
+## Create a repo, launch Codespaces
 
 Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
+
+Create a new public repo from the template.
 
 The destination should be a Codespaces enabled Org. You should prepend the repo name with your username, so if your username is dkoch, your repo should be `dkoch-codespaces-workshop`.
 
@@ -39,6 +41,10 @@ Now that you have a repo to work from, let's launch Codespaces. Click the green 
 
 ## Let's modify our app
 Open a terminal in vscode. This can be done in the UI, or with ctrl+`. 
+
+```shell
+git checkout -b dev
+```
 
 **Step 1: Run the app**
 ```shell
@@ -62,7 +68,7 @@ info: Microsoft.Hosting.Lifetime[0]
 
 **Step 2: Access our app**
 
-Our app is now running, and it's available to us because Codespaces automatically forwards the ports from the `dotnet run` command. A popup should appear, and we can click on 'Open in Browser' to get to our app. If you don't see a popup, you can visit `https://localhost:7258` in your web browser. 
+Our app is now running, and it's available to us because Codespaces automatically forwards the ports from the `dotnet run` command. Click on the PORTS tab of the console window, then hover over the Local Address for the Application. This is https in a dev environment oddness, so that's why we have to do this. Click the globe to open this URL in the browser.
 
 You are now at the Swagger API documentation. Expand some endpoints and try them out. 
 
@@ -97,7 +103,7 @@ info: Microsoft.Hosting.Lifetime[0]
 **Step 1: Build the docker image.**
 
 ```shell
-dotnet build -c releasse
+dotnet build -c release
 dotnet publish -o app
 docker build . -t "my-app"
 
@@ -161,7 +167,7 @@ info: Microsoft.Hosting.Lifetime[0]
       Content root path: /app/
 ```
 
-Now we need to explicity forward port 8080, because we arbitrarily chose it when running our docker container. Click PORTS in the same are as the terminal, in vscode. Add port 8080. Now you can visit your running container in your web browser, at `http://localhost:8080/swagger`.
+Now we need to explicity forward port 8080, because we arbitrarily chose it when running our docker container. Click PORTS in the same are as the terminal, in vscode. Add port 8080. Now you can visit your running container in your web browser, at `http://localhost:8080`.
 
 ## Using GitHub Actions to Build Containers
 
@@ -187,6 +193,8 @@ Now in the Codespaces terminal again, let's pull our changes into our branch and
 ```shell
 # on dev branch still
 git pull origin main
+# pushing our Action to the dev branch so it can be triggered by the next push
+git push origin dev
 git status
 
 #response
@@ -202,7 +210,8 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Stage, commit and push your changes.
 
 ```shell
-git commit -am "updating endpoints"
+git add .
+git commit -m "updating endpoints"
 git push origin dev
 ```
 
@@ -228,6 +237,13 @@ Like the last step, we create an Action from a Starter. Click Actions, then clic
 ```
 
 That's it! Someone else has already done the hard work for you, this'll just work! Commit directly to main, just like last time.
+
+Let's get this workflow in our `dev` branch now
+
+```shell
+git pull origin main
+git push origin dev
+```
 
  **Step 2: Edit our Terraform**
 
@@ -309,7 +325,6 @@ In the Codespaces terminal:
 
 ```shell
 # on dev branch still
-git pull origin main
 git status
 
 #response
@@ -325,16 +340,13 @@ no changes added to commit (use "git add" and/or "git commit -a")
 Now we have our changes from GitHub in our dev branch, and we can stage, commit and push to trigger our new Terraform Action. 
 
 ```diff
-git commit -am "deploying container app"
+git add .
+git commit -m "deploying container app"
 git push origin dev
 ```
 
-Now our Action will deploy our image to an Azure Container Apps. Follow along and then:
+Now our Action will simply generate a Terraform Plan. This shows us what Terraform is planning to make for us. You can review it in the output of the Action run.
 
-```shell
-az login
-az containerapp list
-```
+We need to make a PR from `dev` -> `main` to deploy our infrastructure and app. Complete the PR and now our Action will deploy our image to an Azure Container Apps. Follow along and then:
 
-Our url is the "fqdn". Copy that, add "/swagger" to the end. Congrats!
-
+Our url is the "fqdn" that was output by terraform. Copy that and launch it in the browser. Congrats!
