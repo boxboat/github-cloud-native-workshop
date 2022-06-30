@@ -25,7 +25,7 @@ page_nav:
         url: '/'
 ---
 
-## Create a repo, a PAT and launch Codespaces
+## Create a repo, a Personal Access Token (PAT) and launch Codespaces
 
 Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
 
@@ -240,7 +240,7 @@ terraform {
 }
 ```
 
- Then, edit `terraform/container_app.tf` and change lies `6`, `11`, `37`, `53` and `54` like so. You can use a find and replace in vscode with ctrl + f to do all of these at one time too:
+ Then, edit `terraform/container_app.tf` and change lines `6`, `11`, `37`, `53` and `54` like so. You can use a find and replace in vscode with ctrl + f to do all of these at one time too:
 
 ```diff
 resource "azurerm_resource_group" "rg" {
