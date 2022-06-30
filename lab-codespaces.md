@@ -25,19 +25,24 @@ page_nav:
         url: '/'
 ---
 
-## Create a repo, launch Codespaces
+## Create a repo, a Personal Access Token (PAT) and launch Codespaces
 
 Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
 
-Create a new public repo from the template.
+Create a new repo from the template linked above. Private works fine.
 
-The destination should be a Codespaces enabled Org. You should prepend the repo name with your username, so if your username is dkoch, your repo should be `dkoch-codespaces-workshop`.
+The destination should be a Codespaces enabled Org and your company likely is providing one for you. You should prepend the repo name with your username, so if your username is dkoch, your repo should be `dkoch-codespaces-workshop`.
 
-Now that you have a repo to work from, let's launch Codespaces. Click the green "Code" button, "Create codespaces on main". You can now choose to open that in the browser, or in your Visual Studio Code desktop app. 
+First thing we need to do is to make a PAT. You do this by clicking on your user bubble in the upper right hand of the screen, then hitting ctrl and clicking "Settings" to open it in a new tab, then "Developer Settings" all the way at the bottom of the menu. Personal Access Tokens is what we need now, so click that and then "Generate a new token". Give it a name, let it expire in 30 days or less, and check the box next to "write: packages". Scroll down and click the green button, then copy the token it gives you.
 
+Go back to your repo tab and click Settings at the top. Under Security, expand Secrets, then choose Actions. Click "New repository secret" and name it "MY_PAT". Paste the PAT you copied into the value box. Click "Add secret".
+
+Now that you have a PAT, a secret and a repo to work from, let's launch Codespaces. Click over to the Code tab at the top of the screen, then the green "Code" button, "Create codespaces on main" in the Codespaces tab here. After a few seconds, you can choose to open that in the browser, or in your Visual Studio Code desktop app. 
 
 ## Let's modify our app
 Open a terminal in vscode. This can be done in the UI, or with ctrl+`. 
+
+Let's start by creating a 'dev' branch:
 
 ```shell
 git checkout -b dev
@@ -70,13 +75,13 @@ Our app is now running, and it's available to us because Codespaces automaticall
 You are now at the Swagger API documentation. Expand some endpoints and try them out. 
 
 **Step 3: Modify the source code**
-In vscode, open `Program.cs`. You can see this is a very, very simple API. We have a single `hello` endpoint and several endpoints which return ASCII art. Modify the output in the `hello()` method, and add a new endpoint at `/blinky` like this:
+In vscode, open `Program.cs`. You can see this is a very, very simple API. We have a single `hello` endpoint and several endpoints which return ASCII art. Modify the output in the `string hello()` method, and add a new endpoint at `/blinky` like this:
 
 ```c#
 app.MapGet("/blinky", () => ascii("blinky"));
 ```
 
-Let's try it out again. Hit ctrl+c in the terminal to kill our last process, then run it again. Visit the site again and confirm your changes. Hit ctrl+c in the terminal when you are done.
+Let's try it out again. Hit ctrl+c in the terminal to kill our last process, then run it again (hit your up key). Visit the site again and confirm your changes. Hit ctrl+c in the terminal when you are done.
 
 ```shell
 # run the app
@@ -168,30 +173,17 @@ Now we need to explicity forward port 8080, because we arbitrarily chose it when
 
 ## Using GitHub Actions to Build Containers
 
-Now that we've built a containerized application in Codespaces, how do we get it deployed to the cloud? Well, the first step is a CI process that builds an image and stores it in GitHub Container Registry.
+Now that we've built a containerized application in Codespaces, how do we get it deployed to the cloud? Well, the first step is a CI/CD process that builds an image and stores it in the GitHub Container Registry.
 
- **Step 1: Create an Action**
+ **Step 1: Poke around the dotnet-build-push Action**
 
-In GitHub, click the Actions tab of your repo. We're going to use a Starter Workflow. This will allow us to very quickly, very easily, get a working Action into our repo. Under "By <YOUR_ORGANIZATION>", chose `.NET Core Container Workflow`
-
-Edit lines `34` and `45` like so:
-
-```diff
---        name: <APP NAME HERE>
-++        name: my-app
-```
-
-Commit directly to main.
+Open the file at `.github/workflows/dotnet-build-push.yml` and take a look at what's happening. We're building a dotnet app, then building a docker image using that build artifact. We'll trigger it next.
 
  **Step 2: Trigger the Action**
 
-Now in the Codespaces terminal again, let's pull our changes into our branch and push the ones we've already made.
+Now in the Codespaces terminal again, let's stage, commit and push our changes to our app.
 
 ```shell
-# on dev branch still
-git pull origin main
-# pushing our Action to the dev branch so it can be triggered by the next push
-git push origin dev
 git status
 
 #response
@@ -212,6 +204,8 @@ git commit -m "updating endpoints"
 git push origin dev
 ```
 
+Back in our repo tab, we can click on Actions at top and see our Action is running. Take a look at it, you can see the output of all the steps.
+
  **Step 3: Trigger the whole Action**
 
 Our Action only builds the dotnet app Artifact on the `dev` branch. To build the container, we must create a PR into `main`. Create a PR from `dev` into `main`, notice the checks and complete the PR. Our Action now runs again, this time creating an image which is stored in our repo as a package. 
@@ -220,39 +214,25 @@ On the "Code" tab of the repo, you'll see our package. Click on it, and take not
 
 ## Using GitHub Actions to Deploy Containers to Azure Container Apps
 
- **Step 1: Create an Action**
+ **Step 1: Look at the terraform Action**
 
-An Azure Container App is essentially a containerized application that runs on top of a Microsoft-managed Kubernetes instance. All you need to worry about is your app, not the infrastructure. Well, we've already taken care of the app, this should be easy right?
+An Azure Container App is essentially a containerized application that runs on top of a Microsoft-managed Kubernetes instance. All you need to worry about is your app, not maintaining the infrastructure. Getting it deployed is also much simpler. Well, we've already taken care of the app, this should be easy right?
 
 Yep.
 
-Like the last step, we create an Action from a Starter. Click Actions, then click "New workflow" and choose the "Terraform Workflow" by your Organization. We need to make just one change here, to let the Action know where our Terraform code lives. Edit line 9 like so:
-
-```diff
---      - <PATH TO TERRAFORM DIRECTORY>
-++      - terraform/**
-```
-
-That's it! Someone else has already done the hard work for you, this'll just work! Commit directly to main, just like last time.
-
-Let's get this workflow in our `dev` branch now
-
-```shell
-git pull origin main
-git push origin dev
-```
+Open the file at `.github/workflows/terraform.yml` and take a look. We've got two stages again like in the last Action, but this one is going to be responsible for deploying infrastructure and our app. The first state will simply do a 'plan', while the second stage, triggered after a Pull Request, will deploy. This is a basic example of a good Terraform workflow that allows for ample review and collaboration.
 
  **Step 2: Edit our Terraform**
 
-The Terraform code that will deploy our infrastructure and app consists of two files. `main.tf` contains the terraform configuration bits. We don't need to worry about that here. `container_app.tf` deploys a resource group, then a Log Analytics workspace, a Container App Environment and a Container App for us.
+The Terraform code, in the `terraform/` directory, that will deploy our infrastructure and app consists of 3 files. `main.tf` contains the terraform configuration bits. We don't need to worry about that here. `container_app.tf` deploys a resource group, then a Log Analytics workspace, a Container App Environment and a Container App for us. `backend.tf` is a special file that configures how Terraform keeps track of what it makes.
 
-In Codespaces, let's edit two more files. The first is responsible for storing our _state_ so that terraform can always be aware of any changes made. Edit `terraform/backend.tf` and give the __key__ a unique name by using your username. For example, my username is 'dkoch'. __Note, if your username has any special characters like "-" or "_", omit those.__ We only want alphanumeric characters here:
+In Codespaces, let's edit these latter two files. The first is responsible for storing our _state_ so that terraform can always be aware of any changes made. Edit `terraform/backend.tf` and give the __key__ a unique name by using your username. For example, my username is 'dkoch'. __Note, if your username has any special characters like "-" or "_", omit those.__ We only want alphanumeric characters here:
 
 ```diff
 terraform {
   backend "azurerm" {
     resource_group_name  = "codespaces-demo-resources"
-    storage_account_name = "codespacesstate"
+    storage_account_name = "codespacesstate1"
     container_name       = "codespacesstate"
 --    key                  = "<USERNAME>.state"
 ++    key                  = "dkoch.state"
@@ -260,7 +240,7 @@ terraform {
 }
 ```
 
- Then, edit `terraform/container_app.tf` and change lies `6`, `11`, `37`, `53` and `54` like so:
+ Then, edit `terraform/container_app.tf` and change lines `6`, `11`, `37`, `53` and `54` like so. You can use a find and replace in vscode with ctrl + f to do all of these at one time too:
 
 ```diff
 resource "azurerm_resource_group" "rg" {
@@ -327,9 +307,10 @@ git status
 #response
 On branch dev
 Changes not staged for commit:
-  (use "git add/rm <file>..." to update what will be committed)
+  (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   terraform/container_app.tf
+        modified:   terraform/backend.tf
+        modified:   terraform/container_app.tf
 
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
@@ -346,4 +327,6 @@ Now our Action will simply generate a Terraform Plan. This shows us what Terrafo
 
 We need to make a PR from `dev` -> `main` to deploy our infrastructure and app. Complete the PR and now our Action will deploy our image to an Azure Container Apps. Follow along and then:
 
-Our url is the "fqdn" that was output by terraform. Copy that and launch it in the browser. Congrats!
+Our url is the "fqdn" that was output by terraform at the bottom of the Terraform Apply step. Copy that and launch it in the browser. Congrats!
+
+Any changes you want to make to your app can now follow this general flow. Code changes will result in a new build, and a new image with a new _tag_. Update the tag in your terraform, `container-app.tf` and then submit a PR. That's the flow.
