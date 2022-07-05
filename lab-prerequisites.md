@@ -21,9 +21,9 @@ page_nav:
 ## Pre-Requisites
 - Modern Web Browser
 - Azure Subscription with a Service Principal with Contributor permissions
-  -`az ad sp create-for-rbac --name "codespaces-workshop" --role Contributor --scopes /subscriptions/<SUBSCRIPTION_ID> --sdk-auth`
+  - `az ad sp create-for-rbac --name "codespaces-workshop" --role Contributor --scopes /subscriptions/<SUBSCRIPTION_ID> --sdk-auth`
   - Save above output for GitHub setup
-- Register the following providers with `az` if not alread registered
+- Register the following providers with `az` if not already registered
   - `az provider register --namespace Microsoft.App`
   - `az provider register --namespace Microsoft.OperationalInsights`
 - Storage Account in the sub for state management
