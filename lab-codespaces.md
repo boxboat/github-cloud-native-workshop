@@ -25,24 +25,24 @@ page_nav:
         url: '/'
 ---
 
-## Create a repo, a Personal Access Token (PAT) and launch Codespaces
+## Create a a Personal Access Token (PAT), repo and launch Codespaces
 
+Link: [Profile Settings](https://github.com/settings/tokens)
 Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
 
-Create a new repo from the template linked above. Private works fine.
-
-Create a PAT inside your GitHub profile settings > Developer settings > Personal access tokens. 
-
-The destination should be a **Codespaces enabled Org** and your company likely is providing one for you. You should prepend the repo name with your username, so if your username is dkoch, your repo should be `dkoch-codespaces-workshop`. Below is a screenshot of how to launch Codespaces from the repository. If you do not see the Codespaces selection OR cannot "Create codespace..." reach out to the Orgs admin. 
-
-![Screen Shot 2022-08-09 at 1 41 56 PM](https://user-images.githubusercontent.com/25825925/183722911-d46fa14d-b9dc-45a1-b1cb-499616caf8c4.png)
-
+Link: [Profile settings](https://github.com/settings/tokens)
 
 First thing we need to do is to make a PAT. You do this by clicking on your user bubble in the upper right hand of the screen, then hitting ctrl and clicking "Settings" to open it in a new tab, then "Developer Settings" all the way at the bottom of the menu. Personal Access Tokens is what we need now, so click that and then "Generate a new token". Give it a name, let it expire in 30 days or less, and check the box next to "write: packages". Scroll down and click the green button, then copy the token it gives you.
 
-Go back to your repo tab and click Settings at the top. Under Security, expand Secrets, then choose Actions. Click "New repository secret" and name it "MY_PAT". Paste the PAT you copied into the value box. Click "Add secret".
+Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
 
-Now that you have a PAT, a secret and a repo to work from, let's launch Codespaces. Click over to the Code tab at the top of the screen, then the green "Code" button, "Create codespaces on main" in the Codespaces tab here. After a few seconds, you can choose to open that in the browser, or in your Visual Studio Code desktop app. 
+Now let's create a new repo from the template linked above. Private works fine. The destination should be a **Codespaces enabled Org** and your company likely is providing one for you. You should prepend the repo name with your username, so if your username is dkoch, your repo should be `dkoch-codespaces-workshop`. Now lets add the PAT created in the earlier steps to the newly created repository settings. Go back to your repo tab and click Settings at the top. Under Security, expand Secrets, then choose Actions. Click "New repository secret" and name it "MY_PAT". Paste the PAT you copied into the value box. Click "Add secret".
+
+Now that you have a PAT, a secret and a repo to work from, let's launch Codespaces. Click over to the Code tab at the top of the screen, then the green "Code" button, "Create codespaces on main" in the Codespaces tab here. After a few seconds, you can choose to open that in the browser, or in your Visual Studio Code desktop app. Below is a screenshot of how to launch Codespaces from the repository. If you do not see the Codespaces selection OR cannot "Create codespace...", ensure that you've created the repository in the Codespaces enabled org or reach out to the Orgs admin.
+
+![Screen Shot 2022-08-09 at 1 41 56 PM](https://user-images.githubusercontent.com/25825925/183722911-d46fa14d-b9dc-45a1-b1cb-499616caf8c4.png)
+![Screen Shot 2022-08-10 at 3 04 50 PM](https://user-images.githubusercontent.com/25825925/183996581-b6af5315-3a95-4318-a8c1-c1d8e61806ba.png)
+
 
 ## Let's modify our app
 Open a terminal in vscode. This can be done in the UI, or with ctrl+`. 
