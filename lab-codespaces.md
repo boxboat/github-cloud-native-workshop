@@ -27,8 +27,6 @@ page_nav:
 
 ## Create a a Personal Access Token (PAT), repo and launch Codespaces
 
-Link: [Profile Settings](https://github.com/settings/tokens)
-Link: [Workshop repo](https://github.com/BoxBoat-Codespaces/codespaces-workshop)
 
 Link: [Profile settings](https://github.com/settings/tokens)
 
